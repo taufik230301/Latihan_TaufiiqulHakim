@@ -1,0 +1,2 @@
+Nama branch harus menggunakan CamelCase
+Setiap hari wajib ada commit
