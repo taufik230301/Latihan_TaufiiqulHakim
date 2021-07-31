@@ -1,0 +1,271 @@
+Create Database DBA;
+create table pegawai;
+create column nip;
+create column nama;
+create column alamat;
+create column jenis kelamin;
+create column ttl;
+create column no hp;
+
+#############Function #########
+
+#####Create##########
+create function create_pegawai(id character varying, nip character varying, password character varying, nama character varying, role integer) returns void
+    language plpgsql
+as
+$$
+BEGIN
+    INSERT INTO "PEGAWAI" (
+                    "ID",
+                   "NIP",
+                   "PASSWORD",
+                   "NAMA",
+                   "STATUS",
+                   "ROLE",
+                   "CREATED_DATE",
+                    "UPDATED_DATE",
+                     "DELETED_DATE"
+                )
+    VALUES ( ID,
+                   NIP,
+                   PASSWORD,
+                   NAMA,
+                   0,
+                   Role,
+                   now(),
+                   now(),
+                   now());
+
+END;
+$$;
+
+alter function create_pegawai(varchar, varchar, varchar, varchar, integer) owner to postgres;
+
+###########Read######
+create function read_all_pegawai()
+    returns TABLE(id character varying, nip character varying, nama character varying, status integer)
+    language plpgsql
+as
+$$
+BEGIN
+    return query
+    SELECT "ID","NIP","NAMA","STATUS"
+    FROM "PEGAWAI"
+    ORDER BY "CREATED_DATE" asc;
+END;
+$$;
+
+alter function read_all_pegawai() owner to postgres;
+
+
+create function read_all_pegawai_by_id(id character varying)
+    returns TABLE(nip character varying, nama character varying, status integer)
+    language plpgsql
+as
+$$
+BEGIN
+    return query
+    SELECT "NIP","NAMA","STATUS"
+    FROM "PEGAWAI" where "ID"=id;
+END;
+$$;
+
+alter function read_all_pegawai_by_id(varchar) owner to postgres;
+
+
+create function read_all_pegawai_by_id_nama(id character varying,nama character varying)
+    returns TABLE(nip character varying, nama character varying, status integer)
+    language plpgsql
+as
+$$
+BEGIN
+    return query
+    SELECT "NIP","NAMA","STATUS"
+    FROM "PEGAWAI" where "ID"=id and "NAMA"=nama;
+END;
+$$;
+
+alter function read_all_pegawai_by_id_nama(varchar,varchar) owner to postgres;
+
+
+
+
+
+
+
+###END#############
+
+
+--==================--
+--       DIAH       --
+--==================--
+USE DBA;
+DROP TABLE pegawai;
+create table PEGAWAI (
+ID  VARCHAR(60) primary key,
+NIP char (18) not null, 
+PASSWORD varchar (100) not null primary key,
+NAMA VARCHAR(60) NOT NULL,
+STATUS varchar (10),
+ROLE varchar (10),
+);
+
+
+CREATE TABLE PEGAWAI_REKENING(
+ID_PEGAWAI  VARCHAR(60) FOREIGN KEY UNIQUE ,
+NAMA_REKENING varchar (30),
+NO_REKENING varchar (20)
+);
+
+CREATE TABLE PEGAWAI_KARTU_IDENTITAS(
+ID_PEGAWAI  VARCHAR(60),
+NOMOR char (16),
+JENIS_KARTU_IDENTITAS char (15)
+);
+
+CREATE TABLE PEGAWAI_DETAIL(
+ID_PEGAWAI  VARCHAR(60),
+GELAR_DEPAN varchar (30),
+GELAR_BELAKANG varchar (30),
+TEMPAT_LAHIR varchar (50),
+TGL_LAHIR date,
+SEX char (1),
+STATUS varchar (10),
+ALAMAT varchar (500),
+AGAMA varchar (15),
+NO_KONTAK varchar (15)
+);
+
+-------------------------------------
+               ZULYADI
+--------------------------------------
+USE DBA;
+DROP TABLE LAB_UTDRS;
+CREATE TABLE LAB_UTDRS(
+REGISTER VARCHAR (10) PRIMARY KEY,
+NAMA VARCHAR(60) NOT NULL,
+NO_KTP VARCHAR (16)
+);
+
+CREATE TABLE BIODATA_PASIEN(
+REGISTER VARCHAR (10),
+TMPT_LAHIR VARCHAR (20),
+TGL_LAHIR DATE,
+JENIS_KELAMIN VARCHAR (1),
+PEKERJAAN VARCHAR (20),
+ALAMAT VARCHAR (100),
+NO_HP VARCHAR (13),
+GOLDAR VARCHAR (3)
+);
+-----------------------------------
+
+_Yudha_
+CREATE TABLE PASIEN_IGD;
+ALTER TABLE PASIEN_IGD ADD NO_REGISTER VARCHAR (10);
+ALTER TABLE PASIEN_IGD ADD NAMA VARCHAR (25);
+ALTER TABLE PASIEN_IGD ADD NO_KTP VARCHAR (16);
+ALTER TABLE PASIEN_IGD ADD TEMPAT_LAHIR VARCHAR (20);
+ALTER TABLE PASIEN_IGD ADD TGL_LAHIR DATE;
+ALTER TABLE PASIEN_IGD ADD JENIS_KELAMIN VARCHAR (10);
+ALTER TABLE PASIEN_IGD ADD PEKERJAAN VARCHAR (20);
+ALTER TABLE PASIEN_IGD ADD ALAMAT VARCHAR (100);
+ALTER TABLE PASIEN_IGD ADD NO_HP VARCHAR (15);
+ALTER TABLE PASIEN_IGD ADD TANGGAL_KUJUNGAN DATE;
+ALTER TABLE PASIEN_IGD ADD RESUSTENDI (10);
+ALTER TABLE PASIEN_IGD ADD JAM_RESUSTENSI VARCHAR (10);
+ALTER TABLE PASIEN_IGD ADD KEADAAN DATANG VARCHAR(25);
+ALTER TABLE PASIEN_IGD ADD DOKTER_JAGA VARCHAR(50);
+ALTER TABLE PASIEN_IGD ADD CARA_BAYAR VARCHAR(10);
+
+*Ridhoandony*
+create table pemeriksaan_radiologi (
+    no_register varchar(10),
+    Idtindakan varchar (50),
+    tgl_kunjungan (date),
+    No_cm varchar(15),
+    user varchar(30),
+    alamat varchar (100),
+    umur varchar (5),
+    no_hp varchar (15),
+    id_dokter varchar (10),
+    id_radiografer varchar (15),
+    nama_dokter varchar (30),
+    nama_radiografer varchar (30),
+    jaminan varchar (15));
+    
+    
+M. Zulfikar adimoro
+create table absensi (
+    nip varchar(30),
+    pin varchar (10),
+    tgl_masuk date,
+    jam_datang date,
+    jam_pulang date,
+    jam_masuk_date date,
+    jam_pulang_date date,
+    jam_masuk_server date,
+    jam_pulang_server date,
+    ref_masuk date,
+    ref_pulang date,
+    kode_shif varchar (5),
+    Id_bagian varchar (7));
+--------------------------------------------------
+create tabel identitas (
+    nip varchar(30),
+    pin varchar(10)
+    id_bagian varchar(7));
+    
+create tabel laporan_absensi(
+    nip varchar(30),
+    tgl_masuk date,
+    jam_datang date,
+    jam_pulang date,
+    jam_masuk_date date,
+    jam_pulang_date date,
+    jam_masuk_server date,
+    jam_pulang_server date,
+    ref_masuk date,
+    ref_pulang date,
+    kode_shif varchar (5);)
+------------------------------------------------------
+    
+   
+    
+ YUNITA RATNA SARI
+ Create table pasien_iri (
+    no_ipd char(10);
+    tgldaftarri date;
+    no_cm char(10);
+    noregasal varchar(10);
+    procmasuk char(3);
+    carabayar varchar(15);
+    umurri number(3));
+    
+    
+    --Alifullah--
+create table fa_sitostatika_pasien (
+    no_register varchar(10),
+    no_medrec varchar (10),
+    nmpasien varchar (40),
+    harike number(3),
+    nm_dokter varchar(60),
+    tglpenyiapan date,
+    ruang varchar (30),
+    diagnosa varchar (50),
+    penjamin varchar (15),
+    noresep varchar (10)
+    );
+    
+    -- SOLIHIN --
+    CREATE TABLE KELUARGA
+(
+  NIP            VARCHAR2(11 BYTE)              NOT NULL,
+  NM_KELUARGA    VARCHAR2(30 BYTE)              NOT NULL,
+  STAT_KEL       VARCHAR2(10 BYTE),
+  TGL_LHR        DATE,
+  SEX_KEL        CHAR(1 BYTE),
+  TGL_NIKAH      DATE,
+  PEKERJAAN      VARCHAR2(50 BYTE),
+  DPT_TUNJANGAN  CHAR(1 BYTE),
+  NIP_BARU       VARCHAR2(20 BYTE)
+);
