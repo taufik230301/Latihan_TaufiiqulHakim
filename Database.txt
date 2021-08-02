@@ -1,5 +1,5 @@
 #### Cerita Komik ####
-#### Author : Taufiiqul Hakim ####
+#### Author : Taufiiqul Hakim Amd. T ####
 #### Date : 02-08-2021 ####
 Create Database DBA;
 create table pegawai;
