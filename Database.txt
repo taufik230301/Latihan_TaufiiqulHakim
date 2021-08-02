@@ -1,3 +1,4 @@
+#### Cerita Komik ####
 Create Database DBA;
 create table pegawai;
 create column nip;
