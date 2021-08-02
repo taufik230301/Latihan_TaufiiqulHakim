@@ -1,5 +1,5 @@
 #### Cerita Komik ####
-#### Author : Taufiiqul Hakim####
+#### Author : Taufiiqul Hakim ####
 Create Database DBA;
 create table pegawai;
 create column nip;
